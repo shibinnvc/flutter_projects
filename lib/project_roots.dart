@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_projects/main.dart';
+import 'package:flutter_projects/projects/hive_flutter/hive_flutter_main.dart';
 
 import 'projects/firebase/firebase_main.dart';
 import 'projects/google_sheet/googlesheet_main.dart';
@@ -12,6 +13,8 @@ class SelectedProject {
         return const GoogleSheetMain();
       case 'firebase':
         return const FirebaseMain();
+      case 'hiveFlutter':
+        return const HiveFlutterMain();
       default:
         return Scaffold(
           appBar: AppBar(),

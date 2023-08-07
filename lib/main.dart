@@ -1,7 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_projects/project_roots.dart';
+import 'package:flutter_projects/projects/firebase/modules/mobile_auth/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -11,14 +19,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Projects',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Projects',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: SelectedProject.project(Project.firebase),
       ),
-      home: SelectedProject.project(Project.googleSheet),
     );
   }
 }
 
-enum Project { googleSheet, orange, yellow, green, blue, indigo, violet }
+enum Project { googleSheet, firebase, hiveFlutter }
