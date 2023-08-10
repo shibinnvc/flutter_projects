@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import '../provider/auth_provider.dart';
 import '../utils/utils.dart';
 import '../widgets/custom_button.dart';
@@ -75,29 +76,44 @@ class _OtpScreenState extends State<OtpScreen> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 20),
-                        Pinput(
-                          length: 6,
-                          showCursor: true,
-                          defaultPinTheme: PinTheme(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: Colors.purple.shade200,
-                              ),
-                            ),
+                        PinFieldAutoFill(
+                          decoration: UnderlineDecoration(
                             textStyle: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                                fontSize: 20, color: Colors.black),
+                            colorBuilder: FixedColorBuilder(
+                                Colors.black.withOpacity(0.3)),
                           ),
-                          onCompleted: (value) {
-                            setState(() {
-                              otpCode = value;
-                            });
+                          currentCode: "",
+                          onCodeSubmitted: (code) {},
+                          onCodeChanged: (code) {
+                            if (code!.length == 6) {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                            }
                           },
                         ),
+                        // Pinput(
+                        //   length: 6,
+                        //   showCursor: true,
+                        //   defaultPinTheme: PinTheme(
+                        //     width: 60,
+                        //     height: 60,
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(10),
+                        //       border: Border.all(
+                        //         color: Colors.purple.shade200,
+                        //       ),
+                        //     ),
+                        //     textStyle: const TextStyle(
+                        //       fontSize: 20,
+                        //       fontWeight: FontWeight.w600,
+                        //     ),
+                        //   ),
+                        //   onCompleted: (value) {
+                        //     setState(() {
+                        //       otpCode = value;
+                        //     });
+                        //   },
+                        // ),
                         const SizedBox(height: 25),
                         SizedBox(
                           width: MediaQuery.of(context).size.width,
